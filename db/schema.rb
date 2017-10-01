@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171001182636) do
+ActiveRecord::Schema.define(version: 20171001190559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "answers", force: :cascade do |t|
+    t.text "title"
+    t.uuid "question_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+  end
 
   create_table "question_hierarchies", id: false, force: :cascade do |t|
     t.uuid "ancestor_id", null: false
@@ -31,4 +40,5 @@ ActiveRecord::Schema.define(version: 20171001182636) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "answers", "questions"
 end
