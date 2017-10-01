@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Answer, type: :model do
-  subject { create(:answer) }
+RSpec.describe Alternative, type: :model do
+  subject { create(:alternative) }
 
   it { should validate_presence_of(:title) }
   it { should validate_uniqueness_of(:title) }

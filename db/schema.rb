@@ -16,14 +16,14 @@ ActiveRecord::Schema.define(version: 20171001192633) do
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
 
-  create_table "answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "alternatives", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "title"
     t.uuid "question_id"
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["question_id"], name: "index_answers_on_question_id"
-    t.index ["title"], name: "index_answers_on_title", unique: true
+    t.index ["question_id"], name: "index_alternatives_on_question_id"
+    t.index ["title"], name: "index_alternatives_on_title", unique: true
   end
 
   create_table "question_hierarchies", id: false, force: :cascade do |t|
@@ -50,5 +50,5 @@ ActiveRecord::Schema.define(version: 20171001192633) do
     t.index ["email"], name: "index_users_on_email"
   end
 
-  add_foreign_key "answers", "questions"
+  add_foreign_key "alternatives", "questions"
 end
