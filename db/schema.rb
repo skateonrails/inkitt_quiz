@@ -42,6 +42,12 @@ ActiveRecord::Schema.define(version: 20171001192633) do
     t.index ["title"], name: "index_questions_on_title", unique: true
   end
 
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "email"
+    t.text "fingerprint_hash"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email"
   end
 
   add_foreign_key "answers", "questions"
