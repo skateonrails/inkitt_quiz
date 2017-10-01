@@ -40,13 +40,20 @@ gem 'bootstrap', '~> 4.0.0.beta'
 
 gem 'jquery-rails'
 
+gem 'closure_tree'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'overcommit'
-  gem 'reek'
+  gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 3.6'
-  gem 'rubocop'
+end
+
+group :test do
+  gem 'database_cleaner'
+  gem 'faker'
+  gem 'shoulda-matchers'
+  gem 'simplecov', require: false
 end
 
 group :development do
@@ -56,6 +63,9 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
+  gem 'overcommit'
+  gem 'reek'
+  gem 'rubocop'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
