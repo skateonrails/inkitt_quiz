@@ -1,0 +1,23 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{charset: "utf-8"}/
+    %meta{content: "width=device-width, initial-scale=1, shrink-to-fit=no", name: "viewport"}/
+    %meta{content: "Simple quiz application", name: "description"}/
+    %meta{content: "Samuel de Almeida Prado", name: "author"}/
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', params[:controller], media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', params[:controller], 'data-turbolinks-track': 'reload'
+    %title Inkitt Quiz
+  %body
+    .site-wrapper
+      .site-wrapper-inner
+        .cover-container
+          = render 'layouts/header'
+
+          .inner.cover
+            - flash.each do |key, message|
+              = render 'layouts/flash_message', key: key, message: message
+            = yield
+
+          = render 'layouts/footer'

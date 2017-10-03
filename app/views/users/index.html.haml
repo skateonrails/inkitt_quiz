@@ -1,0 +1,13 @@
+%h4 Hi!
+%p
+  Take a couple of minutes to do our quiz.
+  %br
+  Please insert your email to proceed.
+%br
+%br
+= form_for @user do |form|
+  .form-group
+    = form.text_field :email, placeholder: 'email@domain.com', class: 'form-control'
+    = form.hidden_field :fingerprint_hash, id: 'device-fingerprint-hash'
+
+  = form.submit 'Proceed', class: "btn btn-primary"
