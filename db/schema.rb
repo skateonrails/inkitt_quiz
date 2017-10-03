@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20171001195600) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_alternatives_on_question_id"
-    t.index ["title"], name: "index_alternatives_on_title", unique: true
+    t.index ["title", "question_id"], name: "index_alternatives_on_title_and_question_id", unique: true
   end
 
   create_table "answers", force: :cascade do |t|
