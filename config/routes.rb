@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'questions/show'
+
+  get 'questions/next_question'
+
+  get 'questions/previous_question'
+
   root to: 'users#index'
 
   resources :users, only: [:index, :create]
