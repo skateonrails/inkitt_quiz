@@ -11,6 +11,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'POST #create' do
     before :each do
+      create(:question)
       post :create, params: attributes
     end
 
@@ -29,7 +30,7 @@ RSpec.describe UsersController, type: :controller do
       }
 
       it { expect(flash[:error]).not_to be_present }
-      it { expect(response).to redirect_to(root_path) }
+      it { expect(response).to redirect_to(question_path(Question.first)) }
     end
   end
 

@@ -8,7 +8,8 @@ previous_question = nil
   question = Question.create(title: "Question #{question_number}",
                              parent: previous_question)
   1.upto(5) do |alternative_number|
-    question.alternatives.create(title: "Alternative #{alternative_number}")
+    question.alternatives.create(title: "Alternative #{alternative_number}",
+                                 position: alternative_number)
   end
   previous_question = question
 end
