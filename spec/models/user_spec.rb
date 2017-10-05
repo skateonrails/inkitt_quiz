@@ -8,4 +8,5 @@ RSpec.describe User, type: :model do
   it { should allow_value('example@domain.com').for(:email) }
   it { should validate_presence_of(:fingerprint_hash) }
   it { should validate_uniqueness_of(:fingerprint_hash).scoped_to(:email) }
+  it { should have_many(:answers) }
 end

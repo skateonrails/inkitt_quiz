@@ -6,18 +6,8 @@ RSpec.describe Answer, type: :model do
   it { should belong_to(:user) }
   it { should belong_to(:question) }
   it { should belong_to(:alternative) }
-
-  it 'validate uniqueness' do
-    user = create(:user)
-    question = create(:question)
-    alternative = create(:alternative)
-    answer = Answer.create(user: user,
-                           question: question,
-                           alternative: alternative)
-    invalid_answer = Answer.new(user: user,
-                                question: question,
-                                alternative: alternative)
-
-    expect(invalid_answer.valid?).to be false
-  end
+  it { should validate_uniqueness_of(:user).scoped_to(:question_id) }
+  it { should validate_presence_of(:user_id) }
+  it { should validate_presence_of(:question_id) }
+  it { should validate_presence_of(:alternative_id) }
 end

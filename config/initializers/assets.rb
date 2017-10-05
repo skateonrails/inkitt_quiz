@@ -17,6 +17,7 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w[layout.css]
 ASSETS = %w[
   users
+  questions
 ].freeze
 
 ASSETS.each do |controller|
