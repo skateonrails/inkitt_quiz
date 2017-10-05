@@ -18,6 +18,7 @@ Rails.application.config.assets.precompile += %w[layout.css]
 ASSETS = %w[
   users
   questions
+  answers
 ].freeze
 
 ASSETS.each do |controller|

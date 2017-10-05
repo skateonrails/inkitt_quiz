@@ -1,6 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+  describe 'GET #index' do
+    before :each do
+      get :index, session: { current_user_id: user.id }
+    end
+
+    context 'with user that did not finished the quiz' do
+      let(:user) { create(:user) }
+
+      it { expect(flash[:error]).to be_present }
+      it { expect(response).to redirect_to(root_path) }
+    end
+
+    context 'with user that finished the quiz' do
+      let(:user) { create(:user_with_finished_quiz) }
+
+      it { expect(flash[:error]).not_to be_present }
+      it { expect(response).to have_http_status(:success) }
+    end
+  end
+
   describe 'POST #create' do
     let(:question) { create(:question) }
     let(:alternative) { create(:alternative, question: question) }
@@ -43,8 +63,8 @@ RSpec.describe AnswersController, type: :controller do
       }
 
       it { expect(flash[:error]).not_to be_present }
-      # TODO: expect redirect to result path
-      #it { expect(response).to redirect_to(question_path(next_question)) }
+      it { expect(user.reload.finished_quiz).to be true }
+      it { expect(response).to redirect_to(answers_path) }
     end
   end
 
@@ -97,8 +117,8 @@ RSpec.describe AnswersController, type: :controller do
       }
 
       it { expect(flash[:error]).not_to be_present }
-      # TODO: expect redirect to result path
-      #it { expect(response).to redirect_to(question_path(next_question)) }
+      it { expect(user.reload.finished_quiz).to be true }
+      it { expect(response).to redirect_to(answers_path) }
     end
   end
 end

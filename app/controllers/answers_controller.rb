@@ -1,4 +1,15 @@
 class AnswersController < ProtectedController
+  before_action :user_finished_quiz?, only: :index
+
+  def index
+    @questions = Question.includes(:alternatives)
+                         .order(:created_at)
+                         .all
+    @grouped_answers = Answer.finished
+                             .group(:question_id, :alternative_id)
+                             .count
+  end
+
   def create
     save_and_redirect
   end
@@ -12,7 +23,11 @@ class AnswersController < ProtectedController
 
   def save_and_redirect
     if answer.save
-      redirect_to question_path(next_question) if next_question.present?
+      if next_question.present?
+        redirect_to question_path(next_question)
+      else
+        finish_quiz_for_user
+      end
     else
       flash[:error] = 'Could not save answer'
       redirect_to question_path(question)
@@ -45,7 +60,20 @@ class AnswersController < ProtectedController
     answer_attributes[:alternative_id]
   end
 
+  def finish_quiz_for_user
+    user.finished_quiz = true
+    user.save
+    redirect_to answers_path
+  end
+
   def answer_attributes
     params.require(:answer).permit(:alternative_id)
+  end
+
+  def user_finished_quiz?
+    unless user.finished_quiz?
+      flash[:error] = 'You did not finished the quiz'
+      redirect_to root_path
+    end
   end
 end

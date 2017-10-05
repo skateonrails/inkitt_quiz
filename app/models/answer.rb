@@ -7,4 +7,6 @@ class Answer < ApplicationRecord
   validates :user_id, presence: true
   validates :question_id, presence: true
   validates :alternative_id, presence: true
+
+  scope :finished, -> { where(user_id: User.finished_quiz) }
 end

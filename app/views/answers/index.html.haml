@@ -1,0 +1,13 @@
+%h4 Result of the quiz
+%p
+  Here you can see all the answers for this quiz from all users
+%br
+- @questions.each do |question|
+  %div.mr-3.mb-3.float-left
+    %h4.card-title
+      = question.title
+    %ul.list-group
+      - question.alternatives.each do |alternative|
+        %li.list-group-item
+          = "#{alternative.title} - #{@grouped_answers[[question.id, alternative.id]].to_i}"
+.clearfix
