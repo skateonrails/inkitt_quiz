@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   resources :users, only: %i[index create]
 
   resources :questions, only: [:show] do
-    resources :answers, only: [:create]
+    resources :answers, only: [:create, :update]
   end
 end

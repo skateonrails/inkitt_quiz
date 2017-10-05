@@ -1,7 +1,7 @@
 %h4
   = @question.title
 %br
-= form_for @answer, url: '' do |form|
+= form_for [@question, @answer] do |form|
   = form.collection_radio_buttons :alternative_id, @question.alternatives, :id, :title, include_hidden: false do |element|
     .form-check
       = element.label { element.radio_button + ' ' + element.text }

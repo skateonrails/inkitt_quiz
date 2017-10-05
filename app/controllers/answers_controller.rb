@@ -1,5 +1,16 @@
 class AnswersController < ProtectedController
   def create
+    save_and_redirect
+  end
+
+  def update
+    answer.alternative_id = alternative_id
+    save_and_redirect
+  end
+
+  private
+
+  def save_and_redirect
     if answer.save
       redirect_to question_path(next_question) if next_question.present?
     else
@@ -8,11 +19,17 @@ class AnswersController < ProtectedController
     end
   end
 
-  private
-
   def answer
-    @answer ||= user.answers.build(
-      question: question, alternative_id: answer_attributes[:alternative_id]
+    @answer ||= find_answer || build_answer
+  end
+
+  def find_answer
+    user.answers.where(id: params[:id]).first
+  end
+
+  def build_answer
+    user.answers.build(
+      question: question, alternative_id: alternative_id
     )
   end
 
@@ -22,6 +39,10 @@ class AnswersController < ProtectedController
 
   def next_question
     question.next_question
+  end
+
+  def alternative_id
+    answer_attributes[:alternative_id]
   end
 
   def answer_attributes
