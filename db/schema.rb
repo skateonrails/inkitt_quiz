@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20171001195600) do
     t.datetime "updated_at", null: false
     t.index ["alternative_id"], name: "index_answers_on_alternative_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
-    t.index ["user_id", "question_id", "alternative_id"], name: "index_answers_on_user_id_and_question_id_and_alternative_id", unique: true
+    t.index ["user_id", "question_id"], name: "index_answers_on_user_id_and_question_id", unique: true
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
 

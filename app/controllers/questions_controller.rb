@@ -1,4 +1,4 @@
-class QuestionsController < ApplicationController
+class QuestionsController < ProtectedController
   def show
     @answer = question.answers.build(user: user)
     @previous_question = @question.previous_question
@@ -9,9 +9,5 @@ class QuestionsController < ApplicationController
 
   def question
     @question ||= Question.find(params[:id])
-  end
-
-  def user
-    @user ||= User.find(session[:current_user_id])
   end
 end
