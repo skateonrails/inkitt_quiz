@@ -6,6 +6,7 @@ RSpec.describe UsersController, type: :controller do
     it 'returns http success' do
       get :index
       expect(response).to have_http_status(:success)
+      expect(session[:current_user_id]).to be_nil
     end
   end
 
@@ -31,6 +32,29 @@ RSpec.describe UsersController, type: :controller do
 
       it { expect(flash[:error]).not_to be_present }
       it { expect(response).to redirect_to(question_path(Question.first)) }
+      it { expect(session[:current_user_id]).to be_present }
+    end
+
+    context 'with already existent attributes and finished quiz' do
+      let(:user) { create(:user_with_finished_quiz) }
+      let(:attributes) {
+        { user: user.attributes }
+      }
+
+      it { expect(flash[:notice]).to be_present }
+      it { expect(response).to redirect_to(answers_path) }
+      it { expect(session[:current_user_id]).to be_present }
+    end
+
+    context 'with already existent attributes' do
+      let(:user) { create(:user) }
+      let(:attributes) {
+        { user: user.attributes }
+      }
+
+      it { expect(flash[:notice]).to be_present }
+      it { expect(response).to redirect_to(question_path(Question.first)) }
+      it { expect(session[:current_user_id]).to be_present }
     end
   end
 
